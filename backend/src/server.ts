@@ -29,8 +29,11 @@ const giftCards: GiftCard[] = [
   { id: 2, name: 'Starbucks', image: 'starbucks.png' },
   { id: 3, name: 'Netflix', image: 'netflix.png' }
 ];
-
-app.get('/api/cards', (_, res) => {
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+app.get('/api/cards', async (_, res) => {
+  await sleep(1000); // Pause for 2000 milliseconds (2 seconds)
   res.json(giftCards);
 });
 

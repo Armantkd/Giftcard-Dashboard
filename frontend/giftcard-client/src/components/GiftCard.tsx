@@ -1,32 +1,21 @@
 import { useState } from 'react';
-import { GiftCard } from '../types';
-
+import { GiftCardOutline } from '../types';
+import { useCart } from '../context/CartContext';
 type Props = {
-  card: GiftCard;
+  card: GiftCardOutline;
 };
 
-export default function GiftCardComponent({ card }: Props) {
+export default function GiftCard({ card }: Props) {
   const [showForm, setShowForm] = useState(false);
   const [email, setEmail] = useState('');
   const [amount, setAmount] = useState(10);
   const [resultMsg, setResultMsg] = useState('');
+  const { cart, addToCart } = useCart();
 
-  const handlePurchase = async () => {
-    try {
-      const res = await fetch('http://localhost:3000/api/purchase', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cardId: card.id, email, amount }),
-      });
-
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
-      const data = await res.json();
-      setResultMsg(`✅ Code: ${data.code}`);
-    } catch (err: any) {
-      setResultMsg(`❌ ${err.message}`);
-    }
-  };
-
+  const wrap = () =>{
+    addToCart({cardId: card.id, amount, email});
+    setResultMsg("Added to cart!")
+  }
   return (
     <div className="card">
       <h3>{card.name}</h3>
@@ -49,7 +38,7 @@ export default function GiftCardComponent({ card }: Props) {
             <option value={25}>$25</option>
             <option value={50}>$50</option>
           </select>
-          <button onClick={handlePurchase}>Submit</button>
+          <button onClick={wrap}>Add to cart</button>
           <p>{resultMsg}</p>
         </div>
       )}

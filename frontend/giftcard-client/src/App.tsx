@@ -1,23 +1,35 @@
 import { useEffect, useState } from 'react';
-import { GiftCard } from './types';
-import GiftCardComponent from './components/GiftCard';
+import { GiftCardOutline } from './types';
+import GiftCard from './components/GiftCard';
+import CartModal from './components/CartModal';
+import { CartProvider } from './context/CartContext';
 import './App.css';
 
 function App() {
-  const [cards, setCards] = useState<GiftCard[]>([]);
+  const [cards, setCards] = useState<GiftCardOutline[]>([]);
 
   useEffect(() => {
     fetch('http://localhost:3000/api/cards')
       .then((res) => res.json())
-      .then(setCards);
+      .then(data => {
+        console.log("Fetched cards:", data);
+        setCards(data);
+      });
   }, []);
-
   return (
-    <div className="card-list">
-      {cards.map((card) => (
-        <GiftCardComponent key={card.id} card={card} />
-      ))}
-    </div>
+    <CartProvider>
+
+    <div className = "flex">
+    <CartModal/>
+        <div className="card-list">
+          {cards.length === 0 ? (
+          <p>Loading gift cards...</p>
+          ) : (
+            cards.map((card) => <GiftCard key={card.id} card={card} />)
+          )}
+        </div>
+      </div>
+    </CartProvider>
   );
 }
 
