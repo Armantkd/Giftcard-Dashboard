@@ -13,6 +13,17 @@ export default function GiftCard({ card }: Props) {
   const { cart, addToCart } = useCart();
 
   const wrap = () =>{
+    const isValidEmail = (email: string) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (email.length === 0){
+      setResultMsg("Empty Email Address! Please enter email")
+      return;
+    }
+    else if (!isValidEmail(email)) {
+      setResultMsg("Invalid Email Address!")
+      return;
+    }
     addToCart({cardId: card.id, amount, email});
     setResultMsg("Added to cart!")
   }
@@ -39,7 +50,7 @@ export default function GiftCard({ card }: Props) {
             <option value={50}>$50</option>
           </select>
           <button onClick={wrap}>Add to cart</button>
-          <p>{resultMsg}</p>
+          <p style={{ color: 'black' }}>{resultMsg}</p>
         </div>
       )}
     </div>

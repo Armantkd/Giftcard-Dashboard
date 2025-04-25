@@ -14,13 +14,56 @@
 .card {
   border: 1px solid #ccc;
   padding: 1rem;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 220px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.card img {
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
 .flex {
   display: flex;
   flex-direction: column;
+}
+
+.form-area {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.cart-modal {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.cart-modal li {
+  list-style: none;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.cart-text {
+  color: black;
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  color: black;
+}
+
+.total {
+  font-weight: bold;
 }
