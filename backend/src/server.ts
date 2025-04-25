@@ -27,11 +27,16 @@ type PurchaseResponse = {
 const giftCards: GiftCard[] = [
   { id: 1, name: 'Amazon', image: 'amazon.png' },
   { id: 2, name: 'Starbucks', image: 'starbucks.png' },
-  { id: 3, name: 'Netflix', image: 'netflix.png' }
+  { id: 3, name: 'Netflix', image: 'netflix.png' },
+  { id: 4, name: 'Steam', image: 'steam.png' }
 ];
-
-app.get('/api/cards', (_, res) => {
-  res.json(giftCards);
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+app.get('/api/cards', async (_, res) => {
+  await sleep(1000); // Pause for 2000 milliseconds (2 seconds)
+  const cardsObj = Object.fromEntries(giftCards.map(card => [card.id, card]));
+  res.json(cardsObj);
 });
 
 app.post('/api/purchase', (req, res) => {
